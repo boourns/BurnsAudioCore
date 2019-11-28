@@ -8,12 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		E288BA1C238A3ED1004380E4 /* BurnsAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E288BA1A238A3ED1004380E4 /* BurnsAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E288BA37238A3F0F004380E4 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA23238A3F0F004380E4 /* ParameterView.swift */; };
+		E288BA38238A3F0F004380E4 /* PSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA24238A3F0F004380E4 /* PSlider.swift */; };
+		E288BA39238A3F0F004380E4 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA25238A3F0F004380E4 /* Picker.swift */; };
+		E288BA3A238A3F0F004380E4 /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA26238A3F0F004380E4 /* UIView+extensions.swift */; };
+		E288BA3B238A3F0F004380E4 /* TouchPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA27238A3F0F004380E4 /* TouchPad.swift */; };
+		E288BA3C238A3F0F004380E4 /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA28238A3F0F004380E4 /* UIColor+extensions.swift */; };
+		E288BA3D238A3F0F004380E4 /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA29238A3F0F004380E4 /* UIImage+extensions.swift */; };
+		E288BA3E238A3F0F004380E4 /* SpectrumUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2A238A3F0F004380E4 /* SpectrumUI.swift */; };
+		E288BA3F238A3F0F004380E4 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2B238A3F0F004380E4 /* Spacing.swift */; };
+		E288BA40238A3F0F004380E4 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2C238A3F0F004380E4 /* Knob.swift */; };
+		E288BA41238A3F0F004380E4 /* BaseAudioUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2D238A3F0F004380E4 /* BaseAudioUnitViewController.swift */; };
+		E288BA42238A3F0F004380E4 /* ModTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2E238A3F0F004380E4 /* ModTarget.swift */; };
+		E288BA43238A3F0F004380E4 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA2F238A3F0F004380E4 /* Slider.swift */; };
+		E288BA44238A3F0F004380E4 /* LFOImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA30238A3F0F004380E4 /* LFOImage.swift */; };
+		E288BA45238A3F0F004380E4 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA31238A3F0F004380E4 /* Button.swift */; };
+		E288BA46238A3F0F004380E4 /* AKTouchPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA33238A3F0F004380E4 /* AKTouchPad.swift */; };
+		E288BA47238A3F0F004380E4 /* ActionKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA34238A3F0F004380E4 /* ActionKit.swift */; };
+		E288BA48238A3F0F004380E4 /* LiveKnob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA35238A3F0F004380E4 /* LiveKnob.swift */; };
+		E288BA49238A3F0F004380E4 /* Silver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA36238A3F0F004380E4 /* Silver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E288BA17238A3ED1004380E4 /* BurnsAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BurnsAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E288BA1A238A3ED1004380E4 /* BurnsAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BurnsAudio.h; sourceTree = "<group>"; };
 		E288BA1B238A3ED1004380E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E288BA23238A3F0F004380E4 /* ParameterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
+		E288BA24238A3F0F004380E4 /* PSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSlider.swift; sourceTree = "<group>"; };
+		E288BA25238A3F0F004380E4 /* Picker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
+		E288BA26238A3F0F004380E4 /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
+		E288BA27238A3F0F004380E4 /* TouchPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPad.swift; sourceTree = "<group>"; };
+		E288BA28238A3F0F004380E4 /* UIColor+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
+		E288BA29238A3F0F004380E4 /* UIImage+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
+		E288BA2A238A3F0F004380E4 /* SpectrumUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectrumUI.swift; sourceTree = "<group>"; };
+		E288BA2B238A3F0F004380E4 /* Spacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		E288BA2C238A3F0F004380E4 /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
+		E288BA2D238A3F0F004380E4 /* BaseAudioUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAudioUnitViewController.swift; sourceTree = "<group>"; };
+		E288BA2E238A3F0F004380E4 /* ModTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModTarget.swift; sourceTree = "<group>"; };
+		E288BA2F238A3F0F004380E4 /* Slider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		E288BA30238A3F0F004380E4 /* LFOImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LFOImage.swift; sourceTree = "<group>"; };
+		E288BA31238A3F0F004380E4 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		E288BA33238A3F0F004380E4 /* AKTouchPad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKTouchPad.swift; sourceTree = "<group>"; };
+		E288BA34238A3F0F004380E4 /* ActionKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionKit.swift; sourceTree = "<group>"; };
+		E288BA35238A3F0F004380E4 /* LiveKnob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveKnob.swift; sourceTree = "<group>"; };
+		E288BA36238A3F0F004380E4 /* Silver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +84,45 @@
 		E288BA19238A3ED1004380E4 /* BurnsAudio */ = {
 			isa = PBXGroup;
 			children = (
+				E288BA36238A3F0F004380E4 /* Silver.swift */,
+				E288BA22238A3F0F004380E4 /* UI */,
 				E288BA1A238A3ED1004380E4 /* BurnsAudio.h */,
 				E288BA1B238A3ED1004380E4 /* Info.plist */,
 			);
 			path = BurnsAudio;
+			sourceTree = "<group>";
+		};
+		E288BA22238A3F0F004380E4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E288BA23238A3F0F004380E4 /* ParameterView.swift */,
+				E288BA24238A3F0F004380E4 /* PSlider.swift */,
+				E288BA25238A3F0F004380E4 /* Picker.swift */,
+				E288BA26238A3F0F004380E4 /* UIView+extensions.swift */,
+				E288BA27238A3F0F004380E4 /* TouchPad.swift */,
+				E288BA28238A3F0F004380E4 /* UIColor+extensions.swift */,
+				E288BA29238A3F0F004380E4 /* UIImage+extensions.swift */,
+				E288BA2A238A3F0F004380E4 /* SpectrumUI.swift */,
+				E288BA2B238A3F0F004380E4 /* Spacing.swift */,
+				E288BA2C238A3F0F004380E4 /* Knob.swift */,
+				E288BA2D238A3F0F004380E4 /* BaseAudioUnitViewController.swift */,
+				E288BA2E238A3F0F004380E4 /* ModTarget.swift */,
+				E288BA2F238A3F0F004380E4 /* Slider.swift */,
+				E288BA30238A3F0F004380E4 /* LFOImage.swift */,
+				E288BA31238A3F0F004380E4 /* Button.swift */,
+				E288BA32238A3F0F004380E4 /* Vendor */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		E288BA32238A3F0F004380E4 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				E288BA33238A3F0F004380E4 /* AKTouchPad.swift */,
+				E288BA34238A3F0F004380E4 /* ActionKit.swift */,
+				E288BA35238A3F0F004380E4 /* LiveKnob.swift */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +168,7 @@
 				TargetAttributes = {
 					E288BA16238A3ED1004380E4 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -130,6 +204,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E288BA37238A3F0F004380E4 /* ParameterView.swift in Sources */,
+				E288BA49238A3F0F004380E4 /* Silver.swift in Sources */,
+				E288BA3D238A3F0F004380E4 /* UIImage+extensions.swift in Sources */,
+				E288BA3F238A3F0F004380E4 /* Spacing.swift in Sources */,
+				E288BA41238A3F0F004380E4 /* BaseAudioUnitViewController.swift in Sources */,
+				E288BA39238A3F0F004380E4 /* Picker.swift in Sources */,
+				E288BA3A238A3F0F004380E4 /* UIView+extensions.swift in Sources */,
+				E288BA3E238A3F0F004380E4 /* SpectrumUI.swift in Sources */,
+				E288BA47238A3F0F004380E4 /* ActionKit.swift in Sources */,
+				E288BA3B238A3F0F004380E4 /* TouchPad.swift in Sources */,
+				E288BA48238A3F0F004380E4 /* LiveKnob.swift in Sources */,
+				E288BA40238A3F0F004380E4 /* Knob.swift in Sources */,
+				E288BA44238A3F0F004380E4 /* LFOImage.swift in Sources */,
+				E288BA45238A3F0F004380E4 /* Button.swift in Sources */,
+				E288BA42238A3F0F004380E4 /* ModTarget.swift in Sources */,
+				E288BA38238A3F0F004380E4 /* PSlider.swift in Sources */,
+				E288BA3C238A3F0F004380E4 /* UIColor+extensions.swift in Sources */,
+				E288BA43238A3F0F004380E4 /* Slider.swift in Sources */,
+				E288BA46238A3F0F004380E4 /* AKTouchPad.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +354,7 @@
 		E288BA20238A3ED1004380E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -270,6 +364,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = BurnsAudio/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -278,6 +373,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.burnsaudio.BurnsAudio;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -286,6 +382,7 @@
 		E288BA21238A3ED1004380E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -295,6 +392,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = BurnsAudio/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
