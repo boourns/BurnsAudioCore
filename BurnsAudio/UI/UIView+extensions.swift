@@ -10,13 +10,21 @@ import UIKit
 
 public extension UIView {
 
-    func constraints(filling: UIView) -> [NSLayoutConstraint] {
+    func constraints(fillingHorizontally: UIView) -> [NSLayoutConstraint] {
         return [
-            topAnchor.constraint(equalTo: filling.topAnchor),
-            leadingAnchor.constraint(equalTo: filling.leadingAnchor),
-            trailingAnchor.constraint(equalTo: filling.trailingAnchor),
-            bottomAnchor.constraint(equalTo: filling.bottomAnchor)
+            leadingAnchor.constraint(equalTo: fillingHorizontally.leadingAnchor),
+            trailingAnchor.constraint(equalTo: fillingHorizontally.trailingAnchor),
         ]
+    }
+    func constraints(fillingVertically: UIView) -> [NSLayoutConstraint] {
+        return [
+            topAnchor.constraint(equalTo: fillingVertically.topAnchor),
+            bottomAnchor.constraint(equalTo: fillingVertically.bottomAnchor)
+        ]
+    }
+    
+    func constraints(filling: UIView) -> [NSLayoutConstraint] {
+        return constraints(fillingVertically: filling) + constraints(fillingHorizontally: filling)
     }
     
     func constraints(safelyFilling filling: UIView) -> [NSLayoutConstraint] {

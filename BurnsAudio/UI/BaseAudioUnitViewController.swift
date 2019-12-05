@@ -37,12 +37,6 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         UIButton.appearance().tintColor = state.colours.primary
     }
     
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        layout()
-    }
-    
     open override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,33 +70,24 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
             self?.state.update(address: param.address, value: param.value)
         }
         
-        view.addSubview(ui!)
-        NSLayoutConstraint.activate(view.constraints(filling: ui!))
+        let box = UIView(frame: desiredUISize())
+        box.addSubview(ui!)
+        let resizor = ContentResizingViewController(childView: box)
+        addChild(resizor)
+        view.addSubview(resizor.view)
+        resizor.didMove(toParent: self)
+        NSLayoutConstraint.activate(ui!.constraints(filling: box))
+        NSLayoutConstraint.activate(view.constraints(filling: resizor.view))
         
-        layout()
-
         ui?.selectPage(0)
-    }
-    
-    func layout() {
-        var pageAxis: NSLayoutConstraint.Axis = .horizontal
-        var pageDistribution: UIStackView.Distribution = .fillEqually
-
-        if view.frame.width < ResponsiveBreak {
-            pageAxis = .vertical
-            pageDistribution = .equalCentering
-        }
-        
-        state.isVertical = (view.frame.width < ResponsiveBreak)
-        
-        state.cStacks.forEach { view in
-            view.axis = pageAxis
-            view.distribution = pageDistribution
-        }
     }
     
     open func buildUI() -> UI {
         fatalError("Override buildUI() in child VC")
+    }
+    
+    open func desiredUISize() -> CGRect {
+        return CGRect(x: 0, y: 0, width: 1024, height: 335)
     }
     
     public func knob(_ address: AUParameterAddress, size: CGFloat = 60.0) -> Knob {
@@ -137,8 +122,8 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         return Panel2(state, child)
     }
     
-    public func cStack(_ children: [UIView]) -> CStack {
-        return CStack(state, children)
+    public func cStack(_ children: [UIView]) -> HStack {
+        return HStack(children)
     }
     
     public func button(_ address: AUParameterAddress, momentary: Bool = false) -> Button {
@@ -179,7 +164,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
     
     public func envPage(envStart: AUParameterAddress, modStart: AUParameterAddress) -> Page {
         return Page("Env",
-                    cStack([
+                    HStack([
                         Stack([
                             panel2(Stack([
                                 slider(envStart),

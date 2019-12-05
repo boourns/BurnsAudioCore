@@ -15,8 +15,7 @@ open class ModTarget: Stack {
         self.init([
             knob,
             picker
-        ])
-        distribution = .equalCentering
+        ], alignment: .bottom)
         knob.label.removeFromSuperview()
         picker.label.text = name
         

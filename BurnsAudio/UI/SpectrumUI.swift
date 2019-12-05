@@ -21,7 +21,6 @@ open class SpectrumState {
     var parameters: [AUParameterAddress: (AUParameter, ParameterView)] = [:]
     var isVertical: Bool = false
     public var colours: SpectrumColours = SpectrumUI.blue
-    var cStacks: [UIStackView] = []
     
     func update(address: AUParameterAddress, value: Float) {
         guard let uiParam = parameters[address] else { return }
@@ -71,7 +70,7 @@ open class SpectrumUI {
 
 open class UI: UIView {
     let state: SpectrumState
-    let containerView = UIScrollView()
+    let containerView = UIView()
     let navigationView = UIStackView()
     let pages: [Page]
     var currentPage: Page
@@ -91,7 +90,6 @@ open class UI: UIView {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         navigationView.translatesAutoresizingMaskIntoConstraints = false
         //containerView.contentMode = .scaleAspectFill
-        containerView.isDirectionalLockEnabled = true
         navigationView.axis = .horizontal
         navigationView.distribution = .fillEqually
         
@@ -105,9 +103,7 @@ open class UI: UIView {
             navigationView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
-        containerView.isScrollEnabled = true
-        
+                
         pages.enumerated().forEach { index, page in
             containerView.addSubview(page)
             
@@ -135,15 +131,10 @@ open class UI: UIView {
         pages.enumerated().forEach { index, page in
             page.isHidden = (selectedIndex != index)
             if selectedIndex == index {
-                containerView.contentSize = CGSize(width: containerView.bounds.size.width,
-                                                   height: page.bounds.height + 10)
-                
                 currentPage = page
             }
         }
-        
-        updateScroll()
-        
+                
         navigationView.arrangedSubviews.enumerated().forEach { index, view in
             guard let button = view as? UIButton else { return }
             if index == selectedIndex {
@@ -154,10 +145,6 @@ open class UI: UIView {
                 button.setTitleColor(state.colours.primary, for: .normal)
             }
         }
-    }
-    
-    func updateScroll() {
-        containerView.isScrollEnabled = (state.isVertical || currentPage.requiresScroll)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -175,8 +162,23 @@ open class Page: UIView {
         super.init(frame: CGRect.zero)
         
         translatesAutoresizingMaskIntoConstraints = false
-        addSubview(child)
-        NSLayoutConstraint.activate(child.constraints(filling: self))
+        if requiresScroll {
+            let scrollView = UIScrollView()
+            scrollView.isScrollEnabled = true
+            scrollView.isDirectionalLockEnabled = true
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(scrollView)
+            NSLayoutConstraint.activate(scrollView.constraints(filling: self))
+            scrollView.addSubview(child)
+            NSLayoutConstraint.activate(child.constraints(filling: scrollView))
+            NSLayoutConstraint.activate(child.constraints(fillingHorizontally: self))
+
+//            scrollView.contentSize = CGSize(width: scrollView.bounds.size.width,
+//                                            height: child.bounds.height + 10)
+        } else {
+            addSubview(child)
+            NSLayoutConstraint.activate(child.constraints(filling: self))
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -184,17 +186,53 @@ open class Page: UIView {
     }
 }
 
-open class Stack: UIStackView {
-    public convenience init(_ children: [UIView]) {
+open class Stack: UIView {
+    public enum Alignment {
+        case fill
+        case top
+        case center
+        case bottom
+    }
+    public convenience init(_ children: [UIView], alignment: Alignment = .fill) {
         self.init()
-        
-        axis = .vertical
-        alignment = .fill
-        distribution = .equalCentering
-        spacing = 1.0/UIScreen.main.scale
+        let stack = UIStackView()
         translatesAutoresizingMaskIntoConstraints = false
         
-        children.forEach { addArrangedSubview($0) }
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.distribution = .equalCentering
+        stack.spacing = 1.0/UIScreen.main.scale
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        children.forEach { stack.addArrangedSubview($0) }
+        addSubview(stack)
+        var constraints: [NSLayoutConstraint] = stack.constraints(fillingHorizontally: self)
+        
+        switch(alignment) {
+        case .fill:
+            constraints += [
+                stack.topAnchor.constraint(equalTo: self.topAnchor),
+                stack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            ]
+        case .top:
+            constraints += [
+                stack.topAnchor.constraint(equalTo: self.topAnchor),
+                stack.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor),
+            ]
+        case .center:
+            constraints += [
+                stack.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor),
+                stack.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor),
+                stack.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            ]
+        case .bottom:
+            constraints += [
+                stack.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor),
+                stack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            ]
+        }
+       
+        NSLayoutConstraint.activate(constraints)
     }
 }
 
@@ -209,29 +247,6 @@ open class HStack: UIStackView {
         translatesAutoresizingMaskIntoConstraints = false
         
         children.forEach { addArrangedSubview($0) }
-    }
-}
-
-open class CStack: UIStackView {
-    let state: SpectrumState
-    
-    init(_ state: SpectrumState, _ children: [UIView]) {
-        self.state = state
-        super.init(frame: CGRect.zero)
-        
-        axis = .horizontal
-        alignment = .fill
-        distribution = .fillEqually
-        spacing = 1.0/UIScreen.main.scale
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        children.forEach { addArrangedSubview($0) }
-        
-        state.cStacks.append(self)
-    }
-    
-    public required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

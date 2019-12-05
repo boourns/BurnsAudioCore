@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E241467D2396D3CB0047C7A6 /* ContentResizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */; };
 		E288BA1C238A3ED1004380E4 /* BurnsAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E288BA1A238A3ED1004380E4 /* BurnsAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E288BA37238A3F0F004380E4 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA23238A3F0F004380E4 /* ParameterView.swift */; };
 		E288BA38238A3F0F004380E4 /* PSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA24238A3F0F004380E4 /* PSlider.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentResizingViewController.swift; sourceTree = "<group>"; };
 		E288BA17238A3ED1004380E4 /* BurnsAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BurnsAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E288BA1A238A3ED1004380E4 /* BurnsAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BurnsAudio.h; sourceTree = "<group>"; };
 		E288BA1B238A3ED1004380E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				E288BA30238A3F0F004380E4 /* LFOImage.swift */,
 				E288BA31238A3F0F004380E4 /* Button.swift */,
 				E288BA32238A3F0F004380E4 /* Vendor */,
+				E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				E288BA41238A3F0F004380E4 /* BaseAudioUnitViewController.swift in Sources */,
 				E288BA39238A3F0F004380E4 /* Picker.swift in Sources */,
 				E288BA3A238A3F0F004380E4 /* UIView+extensions.swift in Sources */,
+				E241467D2396D3CB0047C7A6 /* ContentResizingViewController.swift in Sources */,
 				E288BA3E238A3F0F004380E4 /* SpectrumUI.swift in Sources */,
 				E288BA47238A3F0F004380E4 /* ActionKit.swift in Sources */,
 				E288BA3B238A3F0F004380E4 /* TouchPad.swift in Sources */,
