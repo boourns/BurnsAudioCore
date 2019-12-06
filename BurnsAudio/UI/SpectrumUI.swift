@@ -68,39 +68,79 @@ open class SpectrumUI {
     )
 }
 
+open class PageContainerView: UIView {
+    let startColor: UIColor
+    let endColor: UIColor
+    
+    init(startColor: UIColor, endColor: UIColor) {
+        self.startColor = startColor
+        self.endColor = endColor
+        super.init(frame: CGRect.zero)
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func draw(_ rect: CGRect) {
+      
+      // 2
+      let context = UIGraphicsGetCurrentContext()!
+      let colors = [startColor.cgColor, endColor.cgColor]
+      
+      // 3
+      let colorSpace = CGColorSpaceCreateDeviceRGB()
+      
+      // 4
+      let colorLocations: [CGFloat] = [0.0, 1.0]
+      
+      // 5
+      let gradient = CGGradient(colorsSpace: colorSpace,
+                                     colors: colors as CFArray,
+                                  locations: colorLocations)!
+      
+      // 6
+//      let startPoint = CGPoint.zero
+//      let endPoint = CGPoint(x: 0, y: bounds.height)
+//      context.drawLinearGradient(gradient,
+//                          start: startPoint,
+//                            end: endPoint,
+//                        options: [])
+        
+        let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        let radius = max(self.bounds.size.width, self.bounds.size.height)
+
+        context.drawRadialGradient(gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsAfterEndLocation])
+    }
+}
+
 open class UI: UIView {
     let state: SpectrumState
-    let containerView = UIView()
-    let navigationView = UIStackView()
+    let containerView: PageContainerView
+    let navigationBar: NavigationBar
     let pages: [Page]
-    var currentPage: Page
-    var stackVertically = false
     
     public init(state: SpectrumState, _ pages: [Page]) {
         self.state = state
         self.pages = pages
-        self.currentPage = self.pages[0]
+        self.navigationBar = NavigationBar(state: state, pages: pages)
+        self.containerView = PageContainerView(startColor: state.colours.panel2.adjust(relativeBrightness: 0.5), endColor: state.colours.background)
         
         super.init(frame: CGRect.zero)
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(containerView)
-        addSubview(navigationView)
-        
+        addSubview(navigationBar)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        navigationView.translatesAutoresizingMaskIntoConstraints = false
-        //containerView.contentMode = .scaleAspectFill
-        navigationView.axis = .horizontal
-        navigationView.distribution = .fillEqually
-        
+
         let constraints = [
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: navigationView.topAnchor),
-            navigationView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            navigationView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            navigationView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            containerView.bottomAnchor.constraint(equalTo: navigationBar.topAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            navigationBar.bottomAnchor.constraint(equalTo: bottomAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
                 
@@ -111,19 +151,63 @@ open class UI: UIView {
                 page.topAnchor.constraint(equalTo: containerView.topAnchor),
                 page.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 page.trailingAnchor.constraint(equalTo: trailingAnchor),
-                page.bottomAnchor.constraint(greaterThanOrEqualTo: containerView.bottomAnchor)
+                page.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
             ]
             NSLayoutConstraint.activate(constraints)
-            
+        }
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func selectPage(_ selectedIndex: Int) {
+        navigationBar.selectPage(selectedIndex)
+    }
+}
+
+public protocol NavigationBarDelegate: NSObject {
+    
+}
+
+open class NavigationBar: UIView {
+    public let pageSelectors = UIStackView()
+    let pages: [Page]
+    let state: SpectrumState
+    var currentPage: Page
+    weak var delegate: NavigationBarDelegate?
+
+    init(state: SpectrumState, pages: [Page]) {
+        self.state = state
+        self.pages = pages
+        self.currentPage = pages[0]
+        
+        super.init(frame: CGRect.zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        pageSelectors.axis = .horizontal
+        pageSelectors.distribution = .fillEqually
+        pageSelectors.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(pageSelectors)
+        
+        let constraints = [
+            pageSelectors.topAnchor.constraint(equalTo: topAnchor),
+            leadingAnchor.constraint(equalTo: pageSelectors.leadingAnchor),
+            bottomAnchor.constraint(equalTo: pageSelectors.bottomAnchor),
+            pageSelectors.widthAnchor.constraint(equalToConstant: 1024.0 * 2.0 / 3.0)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
+        pages.enumerated().forEach { index, page in
             let button = UIButton()
             button.setTitle(page.name, for: .normal)
             button.setTitleColor(UIColor.black, for: .normal)
-            
+            button.titleEdgeInsets = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+
             button.addControlEvent(.touchUpInside) { [weak self] in
                 self?.selectPage(index)
             }
             
-            navigationView.addArrangedSubview(button)
+            pageSelectors.addArrangedSubview(button)
         }
     }
     
@@ -135,7 +219,7 @@ open class UI: UIView {
             }
         }
                 
-        navigationView.arrangedSubviews.enumerated().forEach { index, view in
+        pageSelectors.arrangedSubviews.enumerated().forEach { index, view in
             guard let button = view as? UIButton else { return }
             if index == selectedIndex {
                 button.backgroundColor = state.colours.panel2
@@ -146,8 +230,8 @@ open class UI: UIView {
             }
         }
     }
-
-    public required init?(coder aDecoder: NSCoder) {
+    
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -251,9 +335,15 @@ open class HStack: UIStackView {
 }
 
 open class Panel: UIView {
-    var outline: UIView? = nil
-    
     let state: SpectrumState
+    
+    var startColor: UIColor {
+        return state.colours.panel1
+    }
+    
+    var endColor: UIColor {
+        return UIColor.black
+    }
     
     init(_ state: SpectrumState, _ child: UIView) {
         self.state = state
@@ -268,24 +358,22 @@ open class Panel: UIView {
     
     func setup(child: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
-        let outline = UIView()
-        outline.translatesAutoresizingMaskIntoConstraints = false
-        outline.addSubview(child)
-        addSubview(outline)
-        NSLayoutConstraint.activate(child.constraints(insideWithSystemSpacing: outline, multiplier: 0.05))
-        NSLayoutConstraint.activate(outline.constraints(insideWithSystemSpacing: self, multiplier: 0.05))
-        outline.backgroundColor = state.colours.panel1
-        outline.layer.borderColor = UIColor.black.cgColor
-        outline.layer.borderWidth = 1.0 / UIScreen.main.scale
-        self.outline = outline
+    
+        addSubview(child)
+        NSLayoutConstraint.activate(child.constraints(filling: self))
+        
+        //outline.backgroundColor = state.colours.panel1
+        layer.borderColor = state.colours.panel1.cgColor
+        layer.borderWidth = 1.0 / UIScreen.main.scale
     }
+    
 }
 
 open class Panel2: Panel {
     override init(_ state: SpectrumState, _ child: UIView) {
         super.init(state, child)
         setup(child: child)
-        outline?.backgroundColor = state.colours.panel2
+        //outline?.backgroundColor = state.colours.panel2
     }
     
     public required init?(coder aDecoder: NSCoder) {

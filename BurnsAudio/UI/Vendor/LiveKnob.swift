@@ -58,7 +58,7 @@ public enum LiveKnobControlType: Int, Codable {
     @IBInspectable public var progressColor: UIColor = .orange { didSet { drawKnob() }}
     
     /// Line width for the ring base. Defaults 2.
-    @IBInspectable public var baseLineWidth: CGFloat = 1 / UIScreen.main.scale { didSet { drawKnob() }}
+    @IBInspectable public var baseLineWidth: CGFloat = 3 / UIScreen.main.scale { didSet { drawKnob() }}
     
     /// Line width for the progress. Defaults 2.
     @IBInspectable public var progressLineWidth: CGFloat = 2 { didSet { drawKnob() }}
@@ -69,6 +69,8 @@ public enum LiveKnobControlType: Int, Codable {
     /// Layer for the base ring.
     public private(set) var baseLayer = CAShapeLayer()
     public private(set) var ringLayer = CAShapeLayer()
+    public private(set) var gradientLayer = CAGradientLayer()
+    public private(set) var ringGradientLayer = CAGradientLayer()
 
     /// Layer for the progress ring.
     public private(set) var progressLayer = CAShapeLayer()
@@ -103,8 +105,12 @@ public enum LiveKnobControlType: Int, Codable {
         ringLayer.fillColor = UIColor.clear.cgColor
         progressLayer.fillColor = UIColor.clear.cgColor
         pointerLayer.fillColor = UIColor.clear.cgColor
-        layer.addSublayer(baseLayer)
-        layer.addSublayer(ringLayer)
+        
+        gradientLayer.colors = [UIColor.black.cgColor, UIColor.white.adjust(relativeBrightness: 0.2).cgColor]
+        ringGradientLayer.colors = [UIColor.white.adjust(relativeBrightness: 0.3).cgColor, UIColor.black.cgColor]
+
+        layer.addSublayer(ringGradientLayer)
+        layer.addSublayer(gradientLayer)
         layer.addSublayer(progressLayer)
         layer.addSublayer(pointerLayer)
     }
@@ -121,6 +127,12 @@ public enum LiveKnobControlType: Int, Codable {
         baseLayer.position = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         ringLayer.bounds = baseLayer.bounds
         ringLayer.position = baseLayer.position
+        
+        gradientLayer.position = baseLayer.position
+        gradientLayer.bounds = baseLayer.bounds
+        ringGradientLayer.position = baseLayer.position
+        ringGradientLayer.bounds = baseLayer.bounds
+        
         progressLayer.bounds = baseLayer.bounds
         progressLayer.position = baseLayer.position
         pointerLayer.bounds = baseLayer.bounds
@@ -136,7 +148,8 @@ public enum LiveKnobControlType: Int, Codable {
         let center = CGPoint(x: baseLayer.bounds.width / 2, y: baseLayer.bounds.height / 2)
         let radius = (min(baseLayer.bounds.width, baseLayer.bounds.height) / 2) - baseLineWidth
         let circle = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
-        let ring = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        let ring = UIBezierPath(arcCenter: center, radius: radius, startAngle: -CGFloat.pi, endAngle: 0, clockwise: true)
+        //ring.lineWidth = 3.0
 
         baseLayer.path = circle.cgPath
         baseLayer.fillColor = UIColor.black.cgColor
@@ -144,6 +157,9 @@ public enum LiveKnobControlType: Int, Codable {
         
         ringLayer.path = ring.cgPath
         ringLayer.lineCap = .round
+        ringLayer.lineWidth = baseLineWidth
+        ringGradientLayer.mask = ringLayer
+        gradientLayer.mask = baseLayer
         
         // Draw pointer.
         let pointer = UIBezierPath()

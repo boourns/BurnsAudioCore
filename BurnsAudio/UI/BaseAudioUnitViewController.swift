@@ -192,9 +192,9 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
             return panel(cStack([HStack([picker(start + 0), picker(start + 1)]), HStack([knob(start + 2), picker(start+3)])]))
         }
         ruleStack.enumerated().forEach { index, panel in
-            if index % 2 == 1 {
-                panel.outline?.backgroundColor = state.colours.panel2
-            }
+//            if index % 2 == 1 {
+//                panel.outline?.backgroundColor = state.colours.panel2
+//            }
         }
         
         return Page("Matrix", Stack(ruleStack), requiresScroll: true)

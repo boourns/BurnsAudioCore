@@ -66,7 +66,6 @@ class ContentResizingViewController : UIViewController {
         let originalWidth = childView.frame.width / scrollView.zoomScale
         
         let finalZoom = min(scrollView.frame.height / originalHeight, scrollView.frame.width / originalWidth)
-        let finalWidth = originalWidth * finalZoom
         
         scrollView.isScrollEnabled = false
             

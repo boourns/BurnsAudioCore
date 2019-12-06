@@ -33,4 +33,20 @@ public extension UIColor {
         
         return nil
     }
+    
+    func adjust(relativeBrightness: CGFloat) -> UIColor {
+        var currentHue: CGFloat = 0.0
+        var currentSaturation: CGFloat = 0.0
+        var currentBrigthness: CGFloat = 0.0
+        var currentAlpha: CGFloat = 0.0
+
+        if self.getHue(&currentHue, saturation: &currentSaturation, brightness: &currentBrigthness, alpha: &currentAlpha){
+            return UIColor(hue: currentHue,
+                           saturation: currentSaturation,
+                           brightness: currentBrigthness * relativeBrightness,
+                           alpha: currentAlpha)
+        } else {
+            return self
+        }
+    }
 }
