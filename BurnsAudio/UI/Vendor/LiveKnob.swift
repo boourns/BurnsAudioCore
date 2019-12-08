@@ -107,7 +107,7 @@ public enum LiveKnobControlType: Int, Codable {
         pointerLayer.fillColor = UIColor.clear.cgColor
         
         gradientLayer.colors = [UIColor.black.cgColor, UIColor.white.adjust(relativeBrightness: 0.2).cgColor]
-        ringGradientLayer.colors = [UIColor.white.adjust(relativeBrightness: 0.3).cgColor, UIColor.black.cgColor]
+        ringGradientLayer.colors = [UIColor.white.adjust(relativeBrightness: 0.25).cgColor, UIColor.black.cgColor]
 
         layer.addSublayer(ringGradientLayer)
         layer.addSublayer(gradientLayer)

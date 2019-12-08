@@ -82,6 +82,37 @@ public class AKTouchPadView: UIView {
         resetToPosition(horizontalValue, verticalValue)
     }
     
+    public override func draw(_ rect: CGRect) {
+      
+      // 2
+      let context = UIGraphicsGetCurrentContext()!
+      let colors = [UIColor.white.adjust(relativeBrightness: 0.2).cgColor, UIColor.black.cgColor]
+      
+      // 3
+      let colorSpace = CGColorSpaceCreateDeviceRGB()
+      
+      // 4
+        let colorLocations: [CGFloat] = [0.0, 0.45]
+      
+      // 5
+      let gradient = CGGradient(colorsSpace: colorSpace,
+                                     colors: colors as CFArray,
+                                  locations: colorLocations)!
+      
+      // 6
+      let startPoint = CGPoint.zero
+      let endPoint = CGPoint(x: 0, y: bounds.height)
+      context.drawLinearGradient(gradient,
+                          start: startPoint,
+                            end: endPoint,
+                        options: [])
+        
+//        let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+//        let radius = max(self.bounds.size.width, self.bounds.size.height)
+//
+//        context.drawRadialGradient(gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsAfterEndLocation])
+    }
+    
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let touchPoint = touch.location(in: self)
