@@ -171,7 +171,7 @@ open class Slider: UIControl {
         NSLayoutConstraint.activate(constraints)
         
         if (vertical) {
-            transform = CGAffineTransform(rotationAngle: .pi / 2)
+            transform = CGAffineTransform(rotationAngle: -.pi / 2)
         }
     }
     

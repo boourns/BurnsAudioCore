@@ -165,7 +165,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
                         modTarget("LFO -> 1", modStart),
                         modTarget("LFO -> 2", modStart+4),
                     ])
-                ]),
+                ], title: "LFO 1"),
                 /// one
                 UIView()
             ])
@@ -175,31 +175,24 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
     public func envPage(envStart: AUParameterAddress, modStart: AUParameterAddress) -> Page {
         return Page("Env",
                     HStack([
-                        Stack([
-                            panel2(Stack([
-                                slider(envStart, vertical: true),
-                                slider(envStart+1, vertical: true),
-                                slider(envStart+2, vertical: true),
-                                slider(envStart+3, vertical: true),
-                                ]))
-                            ]),
-                        
-                        Stack([
-                            panel2(Stack([
+                            Stack([
+                                slider(envStart),
+                                slider(envStart+1),
+                                slider(envStart+2),
+                                slider(envStart+3),
                                 HStack([
-                                    modTarget("Env -> 1", modStart+8),
-                                    modTarget("Env -> 2", modStart+12),
-                                    ]),
-                                ])),
+                                modTarget("Env -> 1", modStart+8),
+                                modTarget("Env -> 2", modStart+12),
+                                ])
                             ]),
-                            
+                            UIView()
                         ]))
     }
     
     public func modMatrixPage(modStart: AUParameterAddress, numberOfRules: Int) -> Page {
         let ruleStack: [Panel] = (0...numberOfRules-1).map { index in
             let start: AUParameterAddress = modStart + UInt64(index*4)
-            return panel(cStack([HStack([picker(start + 0), picker(start + 1)]), HStack([knob(start + 2), picker(start+3)])]))
+            return panel(cStack([HStack([menuPicker(start + 0), menuPicker(start + 1)]), HStack([knob(start + 2), menuPicker(start+3)])]))
         }
         ruleStack.enumerated().forEach { index, panel in
 //            if index % 2 == 1 {

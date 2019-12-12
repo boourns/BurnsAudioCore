@@ -41,6 +41,9 @@ public class LFOImage: UIView {
             bottomAnchor.constraint(equalToSystemSpacingBelow: waveform.bottomAnchor, multiplier: 1.0)
         ]
         
+        backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+        
+        
         NSLayoutConstraint.activate(constraints)
     }
 

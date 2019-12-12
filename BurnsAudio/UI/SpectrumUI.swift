@@ -321,17 +321,53 @@ open class Stack: UIView {
     }
 }
 
-open class HStack: UIStackView {
-    public convenience init(_ children: [UIView]) {
-        self.init()
+open class HStack: UIView {
+    let stackView = UIStackView()
+    
+    public init(_ children: [UIView], title: String? = nil) {
+        super.init(frame: CGRect.zero)
         
-        axis = .horizontal
-        alignment = .fill
-        distribution = .fillEqually
-        spacing = 1.0/UIScreen.main.scale
+        setup(title)
+        
+        children.forEach { stackView.addArrangedSubview($0) }
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup(_ title: String?) {
+        addSubview(stackView)
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 1.0/UIScreen.main.scale
         translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        children.forEach { addArrangedSubview($0) }
+        var constraints = [
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ]
+        if (title != nil) {
+            let label = UILabel()
+            addSubview(label)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = title
+            label.transform = CGAffineTransform(rotationAngle: -.pi / 2)
+            constraints += [
+                label.leadingAnchor.constraint(equalTo: leadingAnchor),
+                label.topAnchor.constraint(equalTo: topAnchor),
+                label.bottomAnchor.constraint(equalTo: bottomAnchor),
+                label.trailingAnchor.constraint(equalTo: stackView.leadingAnchor)
+            ]
+        } else {
+            constraints += [
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor)
+            ]
+        }
+        NSLayoutConstraint.activate(constraints)
     }
 }
 

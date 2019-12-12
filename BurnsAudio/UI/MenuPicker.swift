@@ -92,8 +92,8 @@ open class MenuPicker: UIControl {
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.titleLabel?.textAlignment = .center
         valueLabel.titleLabel?.textColor = UILabel.appearance().tintColor
-        valueLabel.titleLabel?.numberOfLines = 0
-        valueLabel.titleLabel?.lineBreakMode = .byWordWrapping
+        valueLabel.titleLabel?.numberOfLines = 1
+        valueLabel.titleLabel?.adjustsFontSizeToFitWidth = true
         valueLabel.contentEdgeInsets = UIEdgeInsets(top: 3.0, left: 10.0, bottom: 3.0, right: 10.0)
         valueLabel.setBackgroundImage(UIImage.from(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)), for: .normal)
         valueLabel.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.05).cgColor

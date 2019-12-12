@@ -68,10 +68,11 @@ class ContentResizingViewController : UIViewController {
         let finalZoom = min(scrollView.frame.height / originalHeight, scrollView.frame.width / originalWidth)
         
         scrollView.isScrollEnabled = false
-            
+        scrollView.pinchGestureRecognizer?.isEnabled = false
+        scrollView.panGestureRecognizer.isEnabled = false
+
         scrollView.setZoomScale(finalZoom, animated: true)
     }
-    
 }
 
 extension ContentResizingViewController: UIScrollViewDelegate {
