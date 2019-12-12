@@ -1,5 +1,5 @@
 //
-//  PickerViewController.swift
+//  MenuPickerViewController.swift
 //  BurnsAudio
 //
 //  Created by tom on 2019-12-07.
@@ -9,16 +9,18 @@
 import Foundation
 import UIKit
 
-protocol PickerViewControllerDelegate: NSObject {
-    func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int)
+protocol MenuPickerViewControllerDelegate: NSObject {
+    func menuPickerViewController(_ picker: MenuPickerViewController, didSelectRow row: Int)
 }
 
-class PickerViewController: UIViewController {
+class MenuPickerViewController: UIViewController {
     let data: [String]
-    weak var delegate: PickerViewControllerDelegate? = nil
+    var selectedRow: Int
+    weak var delegate: MenuPickerViewControllerDelegate? = nil
     
-    init(data: [String]) {
+    init(data: [String], selectedRow: Int) {
         self.data = data
+        self.selectedRow = selectedRow
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,10 +45,12 @@ class PickerViewController: UIViewController {
         
         picker.delegate = self
         picker.dataSource = self
+        picker.selectRow(selectedRow, inComponent: 0, animated: false)
+
     }
 }
 
-extension PickerViewController: UIPickerViewDataSource {
+extension MenuPickerViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -60,8 +64,9 @@ extension PickerViewController: UIPickerViewDataSource {
     }
 }
 
-extension PickerViewController: UIPickerViewDelegate {
+extension MenuPickerViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.pickerViewController(self, didSelectRow: row)
+        delegate?.menuPickerViewController(self, didSelectRow: row)
+        selectedRow = row
     }
 }

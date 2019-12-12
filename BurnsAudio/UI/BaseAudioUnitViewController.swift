@@ -55,6 +55,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
     func connectViewWithAU() {
         guard let paramTree = audioUnit?.parameterTree else { return }
         state.tree = paramTree
+        state.rootViewController = self
         
         NSLog("Connecting with AU")
         
@@ -102,8 +103,14 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         return ParameterPicker( state, address)
     }
     
-    public func slider(_ address: AUParameterAddress) -> Slider {
-        return ParameterSlider( state, address)
+    public func menuPicker(_ address: AUParameterAddress, showLabel: Bool = true) -> MenuPicker {
+        let picker = ParameterMenuPicker(state, address, showLabel: showLabel)
+        
+        return picker
+    }
+    
+    public func slider(_ address: AUParameterAddress, vertical: Bool = false) -> Slider {
+        return ParameterSlider( state, address, vertical: vertical)
     }
     
     public func touchPad(_ xAddress: AUParameterAddress, _ yAddress: AUParameterAddress, _ gateAddress: AUParameterAddress) -> TouchPad {
@@ -135,29 +142,32 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         let view = injectedView ?? UIView()
         
         return Page("LFO",
-            cStack([
-                Stack([
-                    view,
-                    panel2(Stack([
-                        HStack([
-                            knob(rate), // LFO Speed
-                            picker(shape), // LFO Wave
-                            knob(shapeMod), // LFO Shape Mod
+            Stack([
+                HStack([
+                    HStack([
+                        Stack([
+                            view,
+                            menuPicker(shape, showLabel: false), // LFO Wave
+                        ]),
+                        Stack([
+                            HStack([
+                                knob(rate), // LFO Speed
+                                knob(shapeMod), // LFO Shape Mod
+                                knob(resetPhase),
                             ]),
-                        ])),
+                        ]),
                     ]),
-                Stack([
-                    panel2(HStack([
-                        button(tempoSync, momentary: false),
-                        knob(resetPhase),
-                        button(keyReset, momentary: false)
-                        ])),
-                    panel(
-                        HStack([
+                    HStack([
+                        Stack([
+                            button(tempoSync, momentary: false),
+                            button(keyReset, momentary: false)
+                        ]),
                         modTarget("LFO -> 1", modStart),
                         modTarget("LFO -> 2", modStart+4),
-                        ])),
-                ])
+                    ])
+                ]),
+                /// one
+                UIView()
             ])
         )
     }
@@ -167,10 +177,10 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
                     HStack([
                         Stack([
                             panel2(Stack([
-                                slider(envStart),
-                                slider(envStart+1),
-                                slider(envStart+2),
-                                slider(envStart+3),
+                                slider(envStart, vertical: true),
+                                slider(envStart+1, vertical: true),
+                                slider(envStart+2, vertical: true),
+                                slider(envStart+3, vertical: true),
                                 ]))
                             ]),
                         

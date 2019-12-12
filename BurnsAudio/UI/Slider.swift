@@ -13,7 +13,7 @@ open class ParameterSlider: Slider, ParameterView {
     let param: AUParameter
     let spectrumState: SpectrumState
 
-    init(_ state: SpectrumState, _ address: AUParameterAddress) {
+    init(_ state: SpectrumState, _ address: AUParameterAddress, vertical: Bool = false) {
         self.spectrumState = state
         guard let param = state.tree?.parameter(withAddress: address) else {
             fatalError("Could not find parameter for address \(address)")
@@ -21,7 +21,7 @@ open class ParameterSlider: Slider, ParameterView {
         
         self.param = param
         
-        super.init(name: param.displayName, value: param.value, minValue: param.minValue, maxValue: param.maxValue, stackVertically: false)
+        super.init(name: param.displayName, value: param.value, minValue: param.minValue, maxValue: param.maxValue, stackVertically: false, vertical: vertical)
         
         spectrumState.parameters[param.address] = (param, self)
         
@@ -77,12 +77,14 @@ open class Slider: UIControl {
     let name: String
     let minValue: Float
     let maxValue: Float
+    let vertical: Bool
     
-    init(name: String, value: Float, minValue: Float, maxValue: Float, stackVertically: Bool) {
+    init(name: String, value: Float, minValue: Float, maxValue: Float, stackVertically: Bool, vertical: Bool) {
         self.name = name
         self.minValue = minValue
         self.maxValue = maxValue
         self.stackVertically = stackVertically
+        self.vertical = vertical
         
         if (minValue < 0) {
             self.slider = PSlider(bipolar: true)
@@ -167,6 +169,10 @@ open class Slider: UIControl {
             ]
         }
         NSLayoutConstraint.activate(constraints)
+        
+        if (vertical) {
+            transform = CGAffineTransform(rotationAngle: .pi / 2)
+        }
     }
     
     func displayString(_ val: Float) -> String {

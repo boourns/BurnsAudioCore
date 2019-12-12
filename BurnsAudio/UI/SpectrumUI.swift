@@ -17,6 +17,7 @@ public struct SpectrumColours {
 }
 
 open class SpectrumState {
+    var rootViewController: UIViewController?
     var tree: AUParameterTree?
     var parameters: [AUParameterAddress: (AUParameter, ParameterView)] = [:]
     var isVertical: Bool = false

@@ -34,7 +34,7 @@ public class LFOImage: UIView {
         let constraints = [
             waveform.centerXAnchor.constraint(equalTo: centerXAnchor),
             waveform.centerYAnchor.constraint(equalTo: centerYAnchor),
-            waveform.heightAnchor.constraint(equalToConstant: 100.0),
+            waveform.heightAnchor.constraint(equalToConstant: 80.0),
             waveform.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: leadingAnchor, multiplier: 1.0),
             waveform.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1.0),
             trailingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: waveform.trailingAnchor, multiplier: 1.0),
