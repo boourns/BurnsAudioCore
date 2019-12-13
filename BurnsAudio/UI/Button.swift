@@ -60,7 +60,7 @@ open class Button: UIView {
         addSubview(button)
         button.layer.borderColor = state.colours.primary.cgColor
         button.layer.borderWidth = 1.0 / UIScreen.main.scale
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 5
         
         let constraints: [NSLayoutConstraint] = [
           button.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: Spacing.margin),

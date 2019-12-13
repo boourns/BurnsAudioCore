@@ -194,7 +194,8 @@ open class NavigationBar: UIView {
             pageSelectors.topAnchor.constraint(equalTo: topAnchor),
             leadingAnchor.constraint(equalTo: pageSelectors.leadingAnchor),
             bottomAnchor.constraint(equalTo: pageSelectors.bottomAnchor),
-            pageSelectors.widthAnchor.constraint(equalToConstant: 1024.0 * 2.0 / 3.0)
+            pageSelectors.widthAnchor.constraint(equalToConstant: 1024.0 * 2.0 / 3.0),
+            heightAnchor.constraint(lessThanOrEqualToConstant: 50.0)
         ]
         NSLayoutConstraint.activate(constraints)
         
@@ -351,16 +352,15 @@ open class HStack: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ]
         if (title != nil) {
-            let label = UILabel()
+            let label = RotatedLabel()
             addSubview(label)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = title
-            label.transform = CGAffineTransform(rotationAngle: -.pi / 2)
+            label.label.text = title
             constraints += [
                 label.leadingAnchor.constraint(equalTo: leadingAnchor),
-                label.topAnchor.constraint(equalTo: topAnchor),
-                label.bottomAnchor.constraint(equalTo: bottomAnchor),
-                label.trailingAnchor.constraint(equalTo: stackView.leadingAnchor)
+                label.trailingAnchor.constraint(equalTo: stackView.leadingAnchor),
+                label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
+                bottomAnchor.constraint(greaterThanOrEqualTo: label.bottomAnchor),
+                label.widthAnchor.constraint(equalToConstant: 20.0)
             ]
         } else {
             constraints += [

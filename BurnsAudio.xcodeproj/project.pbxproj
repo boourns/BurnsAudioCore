@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E22B1529239C9F93002B8D3E /* MenuPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B1528239C9F93002B8D3E /* MenuPickerViewController.swift */; };
 		E22B152B239CA154002B8D3E /* MenuPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B152A239CA154002B8D3E /* MenuPicker.swift */; };
+		E23F034C23A33ECE008081B2 /* RotatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F034B23A33ECE008081B2 /* RotatedLabel.swift */; };
 		E241467D2396D3CB0047C7A6 /* ContentResizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */; };
 		E288BA1C238A3ED1004380E4 /* BurnsAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E288BA1A238A3ED1004380E4 /* BurnsAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E288BA37238A3F0F004380E4 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA23238A3F0F004380E4 /* ParameterView.swift */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		E22B1528239C9F93002B8D3E /* MenuPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPickerViewController.swift; sourceTree = "<group>"; };
 		E22B152A239CA154002B8D3E /* MenuPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPicker.swift; sourceTree = "<group>"; };
+		E23F034B23A33ECE008081B2 /* RotatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatedLabel.swift; sourceTree = "<group>"; };
 		E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentResizingViewController.swift; sourceTree = "<group>"; };
 		E288BA17238A3ED1004380E4 /* BurnsAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BurnsAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E288BA1A238A3ED1004380E4 /* BurnsAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BurnsAudio.h; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				E288BA32238A3F0F004380E4 /* Vendor */,
 				E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */,
 				E22B1528239C9F93002B8D3E /* MenuPickerViewController.swift */,
+				E23F034B23A33ECE008081B2 /* RotatedLabel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 				E288BA45238A3F0F004380E4 /* Button.swift in Sources */,
 				E22B152B239CA154002B8D3E /* MenuPicker.swift in Sources */,
 				E288BA42238A3F0F004380E4 /* ModTarget.swift in Sources */,
+				E23F034C23A33ECE008081B2 /* RotatedLabel.swift in Sources */,
 				E288BA38238A3F0F004380E4 /* PSlider.swift in Sources */,
 				E288BA3C238A3F0F004380E4 /* UIColor+extensions.swift in Sources */,
 				E288BA43238A3F0F004380E4 /* Slider.swift in Sources */,

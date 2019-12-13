@@ -186,7 +186,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
                                 ])
                             ]),
                             UIView()
-                        ]))
+                    ], title: "Modulation Env"))
     }
     
     public func modMatrixPage(modStart: AUParameterAddress, numberOfRules: Int) -> Page {
