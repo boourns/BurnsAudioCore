@@ -90,6 +90,7 @@ open class MenuPicker: UIControl {
         //valueLabel.backgroundColor = SpectrumUI.colours.background
         
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.contentHorizontalAlignment = .left
         valueLabel.titleLabel?.textAlignment = .center
         valueLabel.titleLabel?.textColor = UILabel.appearance().tintColor
         valueLabel.titleLabel?.numberOfLines = 1
@@ -134,13 +135,13 @@ open class MenuPicker: UIControl {
                 valueLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
                 valueLabel.widthAnchor.constraint(greaterThanOrEqualTo: widthAnchor, multiplier: 0.5),
                 valueLabel.heightAnchor.constraint(lessThanOrEqualTo: valueLabel.widthAnchor),
-                bottomAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: valueLabel.bottomAnchor, multiplier: Spacing.margin),
+                bottomAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: valueLabel.bottomAnchor, multiplier: 1.0),
             ]
             if (showLabel) {
                 constraints += [
-                    label.topAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: valueLabel.bottomAnchor, multiplier: Spacing.inner),
+                    label.topAnchor.constraint(equalTo: valueLabel.centerYAnchor, constant: 20.0),
                     label.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: Spacing.margin),
-                    bottomAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: label.bottomAnchor, multiplier: Spacing.margin),
+                    bottomAnchor.constraint(equalToSystemSpacingBelow: label.bottomAnchor, multiplier: Spacing.margin),
                     trailingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: label.trailingAnchor, multiplier: Spacing.margin),
                     label.centerXAnchor.constraint(equalTo: valueLabel.centerXAnchor),
                 ]
