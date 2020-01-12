@@ -75,7 +75,9 @@ open class Knob: UIView, ParameterView {
         
         super.init(frame: CGRect.zero)
         
-        state.parameters[param.address] = (param, self)
+        knob.baseColor = state.colours.accent.adjust(relativeBrightness: 0.75)
+        
+        state.parameters[param.address] = SpectrumParameterEntry(param, self)
         
         setup()
     }

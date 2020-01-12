@@ -11,26 +11,32 @@ import UIKit
 import AVFoundation
 import CoreAudioKit
 
-open class ParameterPicker: Picker, ParameterView {
+open class ParameterPicker: Picker, ParameterView, MenuPickerDelegate {
     let param: AUParameter
 
     let spectrumState: SpectrumState
     
-    init(_ state: SpectrumState, _ address: AUParameterAddress) {
+    init(_ state: SpectrumState, _ address: AUParameterAddress, showLabel: Bool = true) {
         self.spectrumState = state
         guard let param = spectrumState.tree?.parameter(withAddress: address) else {
             fatalError("Could not find param for address \(address)")
         }
         self.param = param
         
-        super.init(name: param.displayName, value: param.value, valueStrings: param.valueStrings!)
+        super.init(name: param.displayName, value: param.value, valueStrings: param.valueStrings!, showLabel: showLabel)
         
-        spectrumState.parameters[param.address] = (param, self)
+        delegate = self
+        
+        spectrumState.parameters[param.address] = SpectrumParameterEntry(param, self)
         
         addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }
             this.param.value = this.value
         }
+    }
+    
+    public func menuPicker(showMenuRequest menu: UIAlertController, sender: UIView) {
+        spectrumState.rootViewController?.show(menu, sender: sender)
     }
     
     public required init(coder: NSCoder) {
@@ -49,12 +55,16 @@ open class Picker: UIControl {
     }
     let name: String
     let horizontal: Bool
+    let showLabel: Bool
     
-    public init(name: String, value: Float, valueStrings: [String], horizontal: Bool = false) {
+    weak var delegate: MenuPickerDelegate?
+    
+    public init(name: String, value: Float, valueStrings: [String], horizontal: Bool = false, showLabel: Bool = true) {
         self.valueStrings = valueStrings
         self.value = value
         self.name = name
         self.horizontal = horizontal
+        self.showLabel = showLabel
         
         super.init(frame: CGRect.zero)
 
@@ -78,8 +88,8 @@ open class Picker: UIControl {
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.textAlignment = .center
         valueLabel.textColor = UILabel.appearance().tintColor
-        valueLabel.numberOfLines = 0
-        valueLabel.lineBreakMode = .byWordWrapping
+        valueLabel.numberOfLines = 1
+        valueLabel.adjustsFontSizeToFitWidth = true
         
         let leftButton = UIButton()
         let rightButton = UIButton()
@@ -93,13 +103,17 @@ open class Picker: UIControl {
         rightButton.setTitle("▶︎", for: .normal)
         
         let container = UIView()
+        //valueLabel.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.15)
+
         container.translatesAutoresizingMaskIntoConstraints = false
         addSubview(container)
         container.addSubview(leftButton)
         container.addSubview(rightButton)
         container.addSubview(valueLabel)
 
-        addSubview(label)
+        if (showLabel) {
+            addSubview(label)
+        }
         
         if horizontal {
             setupHorizontal(container: container, leftButton: leftButton, rightButton: rightButton)
@@ -107,6 +121,24 @@ open class Picker: UIControl {
             setupVertical(container: container, leftButton: leftButton, rightButton: rightButton)
         }
         
+        let tapGesture = UITapGestureRecognizer() { [weak self] in
+            guard let this = self else { return }
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let picker = MenuPickerViewController(data: this.valueStrings, selectedRow: Int(this.value))
+            picker.delegate = this
+            alert.popoverPresentationController?.sourceView = this
+            alert.setValue(picker, forKey: "contentViewController")
+            
+            let doneAction = UIAlertAction(title: "Done", style: .default) { action in
+                alert.dismiss(animated: true)
+            }
+            alert.addAction(doneAction)
+            
+            this.delegate?.menuPicker(showMenuRequest: alert, sender: this)
+        }
+        valueLabel.addGestureRecognizer(tapGesture)
+        valueLabel.isUserInteractionEnabled = true
         
         leftButton.addControlEvent(.touchUpInside) { [weak self] in
             guard let this = self else { return }
@@ -160,11 +192,10 @@ open class Picker: UIControl {
     }
     
     private func setupVertical(container: UIView, leftButton: UIButton, rightButton: UIButton) {
-        let constraints = [
+        var constraints = [
             container.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: Spacing.inner),
             container.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: Spacing.inner),
             trailingAnchor.constraint(equalToSystemSpacingAfter: container.trailingAnchor, multiplier: Spacing.inner),
-            label.topAnchor.constraint(equalToSystemSpacingBelow: container.bottomAnchor, multiplier: Spacing.inner),
             
             leftButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             leftButton.centerYAnchor.constraint(equalTo: container.centerYAnchor),
@@ -176,16 +207,32 @@ open class Picker: UIControl {
             //            valueLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             valueLabel.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor),
             valueLabel.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
-            bottomAnchor.constraint(equalToSystemSpacingBelow: label.bottomAnchor, multiplier: Spacing.margin),
-            label.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: Spacing.margin),
-            trailingAnchor.constraint(equalToSystemSpacingAfter: label.trailingAnchor, multiplier: Spacing.margin),
-            container.heightAnchor.constraint(lessThanOrEqualTo: container.widthAnchor)
+            container.heightAnchor.constraint(lessThanOrEqualTo: container.widthAnchor),
+            bottomAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: container.bottomAnchor, multiplier: 1.0),
+
         ]
+        
+        if (showLabel) {
+            constraints += [
+                label.topAnchor.constraint(equalToSystemSpacingBelow: container.bottomAnchor, multiplier: Spacing.inner),
+                bottomAnchor.constraint(equalToSystemSpacingBelow: label.bottomAnchor, multiplier: Spacing.margin),
+                label.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: Spacing.margin),
+                trailingAnchor.constraint(equalToSystemSpacingAfter: label.trailingAnchor, multiplier: Spacing.margin),
+            ]
+        }
+        
         NSLayoutConstraint.activate(constraints)
     }
     
     private func updateDisplay() {
         let index = Int(round(value)) % valueStrings.count
         valueLabel.text = valueStrings[index]
+    }
+}
+
+extension Picker: MenuPickerViewControllerDelegate {
+    func menuPickerViewController(_ picker: MenuPickerViewController, didSelectRow row: Int) {
+        value = Float(row)
+        sendActions(for: .valueChanged)
     }
 }

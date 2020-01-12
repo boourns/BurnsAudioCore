@@ -28,9 +28,9 @@ open class ParameterMenuPicker: MenuPicker, ParameterView, MenuPickerDelegate {
         self.param = param
 
         super.init(name: param.displayName, value: param.value, valueStrings: param.valueStrings!, showLabel: showLabel)
-        super.delegate = self
+        delegate = self
         
-        spectrumState.parameters[param.address] = (param, self)
+        spectrumState.parameters[param.address] = SpectrumParameterEntry(param, self)
 
         addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }

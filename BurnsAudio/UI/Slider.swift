@@ -23,7 +23,7 @@ open class ParameterSlider: Slider, ParameterView {
         
         super.init(name: param.displayName, value: param.value, minValue: param.minValue, maxValue: param.maxValue, stackVertically: false, vertical: vertical)
         
-        spectrumState.parameters[param.address] = (param, self)
+        spectrumState.parameters[param.address] = SpectrumParameterEntry(param, self)
         
         addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }

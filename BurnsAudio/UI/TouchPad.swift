@@ -58,9 +58,9 @@ open class TouchPad: UIView {
             TouchPadParameterContainer(param: gate, touchpad: self),
         ]
         
-        state.parameters[x.address] = (x, updaters[0])
-        state.parameters[y.address] = (y, updaters[1])
-        state.parameters[gate.address] = (gate, updaters[2])
+        state.parameters[x.address] = SpectrumParameterEntry(x, updaters[0])
+        state.parameters[y.address] = SpectrumParameterEntry(y, updaters[1])
+        state.parameters[gate.address] = SpectrumParameterEntry(gate, updaters[2])
         addSubview(pad)
         pad.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false

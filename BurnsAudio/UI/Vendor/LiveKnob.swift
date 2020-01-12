@@ -105,9 +105,6 @@ public enum LiveKnobControlType: Int, Codable {
         ringLayer.fillColor = UIColor.clear.cgColor
         progressLayer.fillColor = UIColor.clear.cgColor
         pointerLayer.fillColor = UIColor.clear.cgColor
-        
-        gradientLayer.colors = [UIColor.black.cgColor, UIColor.white.adjust(relativeBrightness: 0.2).cgColor]
-        ringGradientLayer.colors = [UIColor.white.adjust(relativeBrightness: 0.25).cgColor, UIColor.black.cgColor]
 
         layer.addSublayer(ringGradientLayer)
         layer.addSublayer(gradientLayer)
@@ -122,6 +119,10 @@ public enum LiveKnobControlType: Int, Codable {
     }
     
     public func drawKnob() {
+        gradientLayer.colors = [baseColor.adjust(relativeBrightness: 0.42).cgColor, baseColor.adjust(relativeBrightness: 0.5).cgColor]
+        
+        ringGradientLayer.colors = [baseColor.adjust(relativeBrightness: 1.2).cgColor, baseColor.adjust(relativeBrightness: 0.8).cgColor]
+        
         // Setup layers
         baseLayer.bounds = bounds
         baseLayer.position = CGPoint(x: bounds.width / 2, y: bounds.height / 2)

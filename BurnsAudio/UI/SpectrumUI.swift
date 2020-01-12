@@ -10,23 +10,33 @@ import UIKit
 import AVFoundation
 
 public struct SpectrumColours {
-    let primary: UIColor
-    let panel2: UIColor
-    let panel1: UIColor
-    let background: UIColor
+    let text: UIColor
+    let accent: UIColor
+    let black: UIColor
+}
+
+struct SpectrumParameterEntry {
+    let parameter: AUParameter
+    weak var view: ParameterView?
+    
+    public init(_ parameter: AUParameter, _ view: ParameterView) {
+        self.parameter = parameter
+        self.view = view
+    }
 }
 
 open class SpectrumState {
-    var rootViewController: UIViewController?
-    var tree: AUParameterTree?
-    var parameters: [AUParameterAddress: (AUParameter, ParameterView)] = [:]
+    weak var rootViewController: UIViewController?
+    weak var tree: AUParameterTree?
+    var parameters: [AUParameterAddress: SpectrumParameterEntry] = [:]
     var isVertical: Bool = false
+    
     public var colours: SpectrumColours = SpectrumUI.blue
     
     func update(address: AUParameterAddress, value: Float) {
         guard let uiParam = parameters[address] else { return }
         DispatchQueue.main.async {
-            uiParam.1.value = value
+            uiParam.view?.value = value
         }
     }
 }
@@ -34,38 +44,33 @@ open class SpectrumState {
 open class SpectrumUI {
     
     public static let greyscale = SpectrumColours(
-        primary: UIColor.init(hex: "#d0d6d9ff")!,
-        panel2: UIColor.init(hex: "#38393bff")!,
-        panel1: UIColor.init(hex: "#292a30ff")!, //"#313335ff")!,
-        background: UIColor.init(hex: "#1e2022ff")!
+        text: UIColor.init(hex: "#d6d5d9ff")!,
+        accent: UIColor.init(hex: "#38393bff")!,
+        black: UIColor.init(hex: "#1e2022ff")!
     )
     
     public static let blue = SpectrumColours(
-        primary: UIColor.init(hex: "#d0d6d9ff")!,
-        panel2: UIColor.init(hex: "#092d81ff")!,
-        panel1: UIColor.init(hex: "#072364ff")!, //"#313335ff")!,
-        background: UIColor.init(hex: "#111111ff")!
+        text: UIColor.init(hex: "#d6d5d9ff")!,
+        accent: UIColor.init(hex: "#092d81ff")!,
+        black: UIColor.init(hex: "#010101ff")!
     )
     
     public static let red = SpectrumColours(
-        primary: UIColor.init(hex: "#d0d6d9ff")!,
-        panel2: UIColor.init(hex: "#890916ff")!,
-        panel1: UIColor.init(hex: "#640710ff")!, //"#313335ff")!,
-        background: UIColor.init(hex: "#111111ff")!
+        text: UIColor.init(hex: "#d6d5d9ff")!,
+        accent: UIColor.init(hex: "#890916ff")!,
+        black: UIColor.init(hex: "#010101ff")!
     )
     
     public static let purple = SpectrumColours(
-        primary: UIColor.init(hex: "#d0d6d9ff")!,
-        panel2: UIColor.init(hex: "#890948ff")!,
-        panel1: UIColor.init(hex: "#640735ff")!, //"#313335ff")!,
-        background: UIColor.init(hex: "#111111ff")!
+        text: UIColor.init(hex: "#d6d5d9ff")!,
+        accent: UIColor.init(hex: "#890948ff")!,
+        black: UIColor.init(hex: "#010101ff")!
     )
     
     public static let green = SpectrumColours(
-        primary: UIColor.init(hex: "#d0d6d9ff")!,
-        panel2: UIColor.init(hex: "#147129ff")!,
-        panel1: UIColor.init(hex: "#00570Fff")!, //"#313335ff")!,
-        background: UIColor.init(hex: "#111111ff")!
+        text: UIColor.init(hex: "#d6d5d9ff")!,
+        accent: UIColor.init(hex: "#147129ff")!,
+        black: UIColor.init(hex: "#010101ff")!
     )
 }
 
@@ -125,7 +130,7 @@ open class UI: UIView {
         self.state = state
         self.pages = pages
         self.navigationBar = NavigationBar(state: state, pages: pages)
-        self.containerView = PageContainerView(startColor: state.colours.panel2.adjust(relativeBrightness: 0.5), endColor: state.colours.background)
+        self.containerView = PageContainerView(startColor: state.colours.accent.adjust(relativeBrightness: 1.0), endColor: state.colours.accent.adjust(relativeBrightness: 0.2))
         
         super.init(frame: CGRect.zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -224,11 +229,11 @@ open class NavigationBar: UIView {
         pageSelectors.arrangedSubviews.enumerated().forEach { index, view in
             guard let button = view as? UIButton else { return }
             if index == selectedIndex {
-                button.backgroundColor = state.colours.panel2
-                button.setTitleColor(UIColor.white, for: .normal)
+                button.backgroundColor = state.colours.accent
+                button.setTitleColor(state.colours.text, for: .normal)
             } else {
-                button.backgroundColor = state.colours.background
-                button.setTitleColor(state.colours.primary, for: .normal)
+                button.backgroundColor = state.colours.black
+                button.setTitleColor(state.colours.text, for: .normal)
             }
         }
     }
@@ -374,14 +379,6 @@ open class HStack: UIView {
 open class Panel: UIView {
     let state: SpectrumState
     
-    var startColor: UIColor {
-        return state.colours.panel1
-    }
-    
-    var endColor: UIColor {
-        return UIColor.black
-    }
-    
     init(_ state: SpectrumState, _ child: UIView) {
         self.state = state
         
@@ -400,7 +397,7 @@ open class Panel: UIView {
         NSLayoutConstraint.activate(child.constraints(filling: self))
         
         //outline.backgroundColor = state.colours.panel1
-        layer.borderColor = state.colours.panel1.cgColor
+        layer.borderColor = state.colours.accent.adjust(relativeBrightness: 0.8).cgColor
         layer.borderWidth = 1.0 / UIScreen.main.scale
     }
     

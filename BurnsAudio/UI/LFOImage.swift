@@ -79,7 +79,7 @@ public class Waveform: UIView {
     public override func draw(_ rect: CGRect) {
         super.draw(rect)
 
-        data = renderLfo() ?? []
+        data = renderLfo() ?? [1]
         lfoLayer.bounds = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         lfoLayer.position = CGPoint(x: bounds.width / 2.0, y: bounds.height/2.0)
         

@@ -41,7 +41,7 @@ open class Button: UIView {
         
         super.init(frame: CGRect.zero)
         
-        state.parameters[param.address] = (param, self)
+        state.parameters[param.address] = SpectrumParameterEntry(param, self)
         
         setup()
     }
@@ -55,10 +55,10 @@ open class Button: UIView {
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(param.displayName, for: .normal)
-        button.setTitleColor(state.colours.primary, for: .normal)
-        button.setTitleColor(state.colours.background, for: .highlighted)
+        button.setTitleColor(state.colours.text, for: .normal)
+        button.setTitleColor(state.colours.black, for: .highlighted)
         addSubview(button)
-        button.layer.borderColor = state.colours.primary.cgColor
+        button.layer.borderColor = state.colours.text.cgColor
         button.layer.borderWidth = 1.0 / UIScreen.main.scale
         button.layer.cornerRadius = 5
         

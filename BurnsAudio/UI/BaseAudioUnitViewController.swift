@@ -13,7 +13,7 @@ let ResponsiveBreak = CGFloat(540.0)
 
 open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDelegate {
     // MARK: Properties
-    
+
     public var audioUnit: AUAudioUnit? {
         didSet {
             DispatchQueue.main.async {
@@ -24,17 +24,17 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         }
     }
     var parameterObserverToken: AUParameterObserverToken?
-    public var state: SpectrumState = SpectrumState()
+    public var state = SpectrumState()
     
     var ui: UI?
 
     open override func loadView() {
         super.loadView()
-        view.backgroundColor = state.colours.background
+        view.backgroundColor = state.colours.black
         
-        UILabel.appearance().tintColor = state.colours.primary
-        UISlider.appearance().tintColor = state.colours.primary
-        UIButton.appearance().tintColor = state.colours.primary
+        UILabel.appearance().tintColor = state.colours.text
+        UISlider.appearance().tintColor = state.colours.text
+        UIButton.appearance().tintColor = state.colours.text
     }
     
     open override func viewDidLoad() {
@@ -56,7 +56,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         guard let paramTree = audioUnit?.parameterTree else { return }
         state.tree = paramTree
         state.rootViewController = self
-        
+
         NSLog("Connecting with AU")
         
         ui = buildUI()
@@ -103,8 +103,8 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
         return ParameterPicker( state, address)
     }
     
-    public func menuPicker(_ address: AUParameterAddress, showLabel: Bool = true) -> MenuPicker {
-        let picker = ParameterMenuPicker(state, address, showLabel: showLabel)
+    public func menuPicker(_ address: AUParameterAddress, showLabel: Bool = true) -> Picker {
+        let picker = ParameterPicker(state, address, showLabel: showLabel)
         
         return picker
     }
