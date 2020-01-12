@@ -25,8 +25,15 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
     }
     var parameterObserverToken: AUParameterObserverToken?
     public var state = SpectrumState()
-    
-    var ui: UI?
+        
+    deinit {
+        NSLog("BaseAudioUnitViewController deinit")
+        
+        // do it twice ourselves as an assertion that if the AU host does this differently
+        // and removes it a third time we don't crash :)
+        view.removeFromSuperview()
+        view.removeFromSuperview()
+    }
 
     open override func loadView() {
         super.loadView()
@@ -59,7 +66,7 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
 
         NSLog("Connecting with AU")
         
-        ui = buildUI()
+        let ui = buildUI()
         
         NSLog("Registering parameter callback")
         
@@ -67,20 +74,20 @@ open class BaseAudioUnitViewController: AUViewController { //, InstrumentViewDel
             self?.state.update(address: address, value: value)
         })
         
-        paramTree.allParameters.forEach { [weak self] param in
-            self?.state.update(address: param.address, value: param.value)
+        paramTree.allParameters.forEach { param in
+            self.state.update(address: param.address, value: param.value)
         }
-        
+
         let box = UIView(frame: desiredUISize())
-        box.addSubview(ui!)
+        box.addSubview(ui)
         let resizor = ContentResizingViewController(childView: box)
         addChild(resizor)
         view.addSubview(resizor.view)
         resizor.didMove(toParent: self)
-        NSLayoutConstraint.activate(ui!.constraints(filling: box))
+        NSLayoutConstraint.activate(ui.constraints(filling: box))
         NSLayoutConstraint.activate(view.constraints(filling: resizor.view))
-        
-        ui?.selectPage(0)
+
+        ui.selectPage(0)
     }
     
     open func buildUI() -> UI {

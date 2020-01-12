@@ -31,6 +31,14 @@ open class SpectrumState {
     var parameters: [AUParameterAddress: SpectrumParameterEntry] = [:]
     var isVertical: Bool = false
     
+    public init() {
+        
+    }
+    
+    deinit {
+        NSLog("SpectrumState deinit")
+    }
+    
     public var colours: SpectrumColours = SpectrumUI.blue
     
     func update(address: AUParameterAddress, value: Float) {
@@ -121,10 +129,14 @@ open class PageContainerView: UIView {
 }
 
 open class UI: UIView {
-    let state: SpectrumState
+    weak var state: SpectrumState? = nil
     let containerView: PageContainerView
     let navigationBar: NavigationBar
     let pages: [Page]
+    
+    deinit {
+        NSLog("UI deinit")
+    }
     
     public init(state: SpectrumState, _ pages: [Page]) {
         self.state = state
@@ -132,7 +144,9 @@ open class UI: UIView {
         self.navigationBar = NavigationBar(state: state, pages: pages)
         self.containerView = PageContainerView(startColor: state.colours.accent.adjust(relativeBrightness: 1.0), endColor: state.colours.accent.adjust(relativeBrightness: 0.2))
         
+        
         super.init(frame: CGRect.zero)
+        
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(containerView)
@@ -246,6 +260,10 @@ open class NavigationBar: UIView {
 open class Page: UIView {
     public let name: String
     public let requiresScroll: Bool
+    
+    deinit {
+        NSLog("Page deinit")
+    }
     
     public init(_ name: String, _ child: UIView, requiresScroll: Bool = false) {
         self.name = name

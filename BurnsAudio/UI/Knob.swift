@@ -22,7 +22,7 @@ open class IntKnob : Knob {
     override
     func displayString(_ val: Float) -> String {
         if pressed {
-            if let values = param.valueStrings {
+            if let values = param?.valueStrings {
                 let index = Int(round(val))
                 if values.count > index {
                     return values[index]
@@ -33,15 +33,19 @@ open class IntKnob : Knob {
                 return String(format:"%.0f", val)
             }
         } else  {
-            return param.displayName
+            return param?.displayName ?? ""
         }
     }
 }
 
 open class Knob: UIView, ParameterView {
-    let param: AUParameter
+    weak var param: AUParameter?
     let label = UILabel()
     let knob: LiveKnob = LiveKnob()
+    
+    deinit {
+        NSLog("Knob deinit")
+    }
     
     var pressed = false {
         didSet {
@@ -90,23 +94,23 @@ open class Knob: UIView, ParameterView {
         translatesAutoresizingMaskIntoConstraints = false
         
         label.textColor = UILabel.appearance().tintColor
-        label.text = param.displayName
+        label.text = param?.displayName ?? ""
         label.font = UIFont.preferredFont(forTextStyle: .subheadline)
         label.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer() { [weak self] in
             guard let this = self else { return }
-            this.param.value = 0.0
+            this.param?.value = 0.0
         }
         label.addGestureRecognizer(tapGesture)
         
-        knob.minimumValue = param.minValue
-        knob.maximumValue = param.maxValue
+        knob.minimumValue = param?.minValue ?? 0.0
+        knob.maximumValue = param?.maxValue ?? 1.0
         knob.continuous = true
         knob.controlType = .horizontalAndVertical
         
         knob.addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }
-            this.param.value = this.knob.value
+            this.param?.value = this.knob.value
             this.label.text = this.displayString(this.knob.value)
         }
         
@@ -141,12 +145,12 @@ open class Knob: UIView, ParameterView {
             self?.pressed = false
         }
         
-        value = param.value
+        value = param?.value ?? 0.0
     }
     
     func displayString(_ val: Float) -> String {
         if pressed {
-            if let values = param.valueStrings {
+            if let values = param?.valueStrings {
                 let index = Int(round(val))
                 if values.count > index {
                     return values[index]
@@ -155,10 +159,10 @@ open class Knob: UIView, ParameterView {
                 }
             } else {
                 var auval: AUValue = AUValue(val)
-                return param.string(fromValue: &auval)
+                return param?.string(fromValue: &auval) ?? ""
             }
         } else  {
-            return param.displayName
+            return param?.displayName ?? ""
         }
     }
 }
