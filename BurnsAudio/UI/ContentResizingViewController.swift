@@ -56,12 +56,6 @@ class ContentResizingViewController : UIViewController {
         print("scrollview size: \(scrollView.frame)")
         // conditions:
         
-        // if smaller than 1.0,
-        // expand to fill height and permit scrolling for width
-        
-        // if larger than 1.0 zoom
-        // expand to fill height or width, float to center for other dimension
-        
         let originalHeight = childView.frame.height / scrollView.zoomScale
         let originalWidth = childView.frame.width / scrollView.zoomScale
         

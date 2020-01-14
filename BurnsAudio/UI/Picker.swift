@@ -12,7 +12,7 @@ import AVFoundation
 import CoreAudioKit
 
 open class ParameterPicker: Picker, ParameterView, MenuPickerDelegate {
-    let param: AUParameter
+    weak var param: AUParameter?
 
     let spectrumState: SpectrumState
     
@@ -31,8 +31,12 @@ open class ParameterPicker: Picker, ParameterView, MenuPickerDelegate {
         
         addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }
-            this.param.value = this.value
+            this.param?.value = this.value
         }
+    }
+    
+    deinit {
+        NSLog("ParameterPicker deinit")
     }
     
     public func menuPicker(showMenuRequest menu: UIAlertController, sender: UIView) {
@@ -149,7 +153,7 @@ open class Picker: UIControl {
                 this.value = newValue
             }
             this.sendActions(for: .valueChanged)
-        }
+        } 
         
         rightButton.addControlEvent(.touchUpInside) { [weak self] in
             guard let this = self else { return }

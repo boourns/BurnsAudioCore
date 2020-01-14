@@ -22,6 +22,10 @@ public class LFOImage: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NSLog("LFOImage deinit")
+    }
+    
     override public func setNeedsDisplay() {
         super.setNeedsDisplay()
         waveform.setNeedsDisplay()
@@ -60,6 +64,10 @@ public class Waveform: UIView {
         
         super.init(frame: CGRect.zero)
         setup()
+    }
+    
+    deinit {
+        NSLog("Waveform deinit")
     }
     
     func setup() {

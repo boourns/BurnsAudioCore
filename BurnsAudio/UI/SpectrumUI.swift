@@ -16,7 +16,7 @@ public struct SpectrumColours {
 }
 
 struct SpectrumParameterEntry {
-    let parameter: AUParameter
+    weak var parameter: AUParameter?
     weak var view: ParameterView?
     
     public init(_ parameter: AUParameter, _ view: ParameterView) {
@@ -230,6 +230,10 @@ open class NavigationBar: UIView {
             
             pageSelectors.addArrangedSubview(button)
         }
+    }
+    
+    deinit {
+        NSLog("NavigationBar deinit")
     }
     
     func selectPage(_ selectedIndex: Int) {

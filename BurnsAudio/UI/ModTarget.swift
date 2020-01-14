@@ -25,4 +25,8 @@ open class ModTarget: Stack {
         }
         picker.label.addGestureRecognizer(tapGesture)
     }
+    
+    deinit {
+        NSLog("ModTarget deinit")
+    }
 }

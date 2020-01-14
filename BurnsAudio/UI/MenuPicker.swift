@@ -17,12 +17,12 @@ public protocol MenuPickerDelegate: NSObject {
 }
 
 open class ParameterMenuPicker: MenuPicker, ParameterView, MenuPickerDelegate {
-    let param: AUParameter
-    let spectrumState: SpectrumState
+    weak var param: AUParameter?
+    weak var spectrumState: SpectrumState?
 
     init(_ state: SpectrumState, _ address: AUParameterAddress, showLabel: Bool = true) {
         self.spectrumState = state
-        guard let param = spectrumState.tree?.parameter(withAddress: address) else {
+        guard let param = spectrumState?.tree?.parameter(withAddress: address) else {
             fatalError("Could not find param for address \(address)")
         }
         self.param = param
@@ -30,11 +30,11 @@ open class ParameterMenuPicker: MenuPicker, ParameterView, MenuPickerDelegate {
         super.init(name: param.displayName, value: param.value, valueStrings: param.valueStrings!, showLabel: showLabel)
         delegate = self
         
-        spectrumState.parameters[param.address] = SpectrumParameterEntry(param, self)
+        spectrumState?.parameters[param.address] = SpectrumParameterEntry(param, self)
 
         addControlEvent(.valueChanged) { [weak self] in
             guard let this = self else { return }
-            this.param.value = this.value
+            this.param?.value = this.value
         }
     }
 
@@ -42,8 +42,12 @@ open class ParameterMenuPicker: MenuPicker, ParameterView, MenuPickerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NSLog("ParameterMenuPicker deinit")
+    }
+    
     public func menuPicker(showMenuRequest menu: UIAlertController, sender: UIView) {
-        spectrumState.rootViewController?.show(menu, sender: sender)
+        spectrumState?.rootViewController?.show(menu, sender: sender)
     }
 }
 

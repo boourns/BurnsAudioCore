@@ -31,6 +31,10 @@ open class ParameterSlider: Slider, ParameterView {
         }
     }
     
+    deinit {
+        NSLog("Slider deinit")
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

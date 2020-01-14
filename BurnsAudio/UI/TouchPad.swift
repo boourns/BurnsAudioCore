@@ -11,7 +11,7 @@ import AVFoundation
 
 class TouchPadParameterContainer: ParameterView {
     let param: AUParameter
-    let touchpad: TouchPad
+    weak var touchpad: TouchPad?
     
     var value: Float {
         get {
@@ -19,6 +19,7 @@ class TouchPadParameterContainer: ParameterView {
         }
         
         set(val) {
+            guard let touchpad = touchpad else { return }
             if (!touchpad.pad.touching) {
                 touchpad.setFromParams()
             }
@@ -28,6 +29,10 @@ class TouchPadParameterContainer: ParameterView {
     init(param: AUParameter, touchpad: TouchPad) {
         self.param = param
         self.touchpad = touchpad
+    }
+    
+    deinit {
+        NSLog("TouchPadParameterContainer deinit")
     }
 }
 
@@ -39,7 +44,7 @@ open class TouchPad: UIView {
     }
     fileprivate let params: Params
     let pad = AKTouchPadView()
-    let state: SpectrumState
+    weak var state: SpectrumState?
     var updaters: [TouchPadParameterContainer] = []
     
     init(_ state: SpectrumState, _ xAddress: AUParameterAddress, _ yAddress: AUParameterAddress, _ gateAddress: AUParameterAddress) {
@@ -76,6 +81,10 @@ open class TouchPad: UIView {
             this.params.y.value = AUValue(y)
             this.params.gate.value = gate ? 1.0 : 0.0
         }
+    }
+    
+    deinit {
+        NSLog("TouchPad deinit")
     }
     
     func setFromParams() {
