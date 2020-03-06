@@ -378,22 +378,22 @@ open class HStack: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ]
-        if (title != nil) {
-            let label = RotatedLabel()
-            addSubview(label)
-            label.label.text = title
-            constraints += [
-                label.leadingAnchor.constraint(equalTo: leadingAnchor),
-                label.trailingAnchor.constraint(equalTo: stackView.leadingAnchor),
-                label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
-                bottomAnchor.constraint(greaterThanOrEqualTo: label.bottomAnchor),
-                label.widthAnchor.constraint(equalToConstant: 20.0)
-            ]
-        } else {
+//        if (title != nil) {
+//            let label = RotatedLabel()
+//            addSubview(label)
+//            label.label.text = title
+//            constraints += [
+//                label.leadingAnchor.constraint(equalTo: leadingAnchor),
+//                label.trailingAnchor.constraint(equalTo: stackView.leadingAnchor),
+//                label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
+//                bottomAnchor.constraint(greaterThanOrEqualTo: label.bottomAnchor),
+//                label.widthAnchor.constraint(equalToConstant: 20.0)
+//            ]
+//        } else {
             constraints += [
                 stackView.leadingAnchor.constraint(equalTo: leadingAnchor)
             ]
-        }
+        //}
         NSLayoutConstraint.activate(constraints)
     }
 }

@@ -30,6 +30,12 @@ class RotatedLabel: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bounds = label.frame
+        NSLog("RotatedLabel layout subview")
+        
+        bounds = CGRect(
+            x: label.frame.minX + 1.0/3.0,
+            y: label.frame.minY + 1.0/3.0,
+            width: label.frame.width + 1.0/3.0,
+            height: label.frame.height + 1.0/3.0)
     }
 }
