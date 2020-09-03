@@ -11,7 +11,7 @@
 		E22B152B239CA154002B8D3E /* MenuPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22B152A239CA154002B8D3E /* MenuPicker.swift */; };
 		E23F034C23A33ECE008081B2 /* RotatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23F034B23A33ECE008081B2 /* RotatedLabel.swift */; };
 		E241467D2396D3CB0047C7A6 /* ContentResizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */; };
-		E288BA1C238A3ED1004380E4 /* BurnsAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = E288BA1A238A3ED1004380E4 /* BurnsAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E288BA1C238A3ED1004380E4 /* BurnsAudioCore.h in Headers */ = {isa = PBXBuildFile; fileRef = E288BA1A238A3ED1004380E4 /* BurnsAudioCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E288BA37238A3F0F004380E4 /* ParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA23238A3F0F004380E4 /* ParameterView.swift */; };
 		E288BA38238A3F0F004380E4 /* PSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA24238A3F0F004380E4 /* PSlider.swift */; };
 		E288BA39238A3F0F004380E4 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA25238A3F0F004380E4 /* Picker.swift */; };
@@ -38,8 +38,8 @@
 		E22B152A239CA154002B8D3E /* MenuPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPicker.swift; sourceTree = "<group>"; };
 		E23F034B23A33ECE008081B2 /* RotatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatedLabel.swift; sourceTree = "<group>"; };
 		E241467C2396D3CB0047C7A6 /* ContentResizingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentResizingViewController.swift; sourceTree = "<group>"; };
-		E288BA17238A3ED1004380E4 /* BurnsAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BurnsAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E288BA1A238A3ED1004380E4 /* BurnsAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BurnsAudio.h; sourceTree = "<group>"; };
+		E288BA17238A3ED1004380E4 /* BurnsAudioCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BurnsAudioCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E288BA1A238A3ED1004380E4 /* BurnsAudioCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BurnsAudioCore.h; sourceTree = "<group>"; };
 		E288BA1B238A3ED1004380E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E288BA23238A3F0F004380E4 /* ParameterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterView.swift; sourceTree = "<group>"; };
 		E288BA24238A3F0F004380E4 /* PSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSlider.swift; sourceTree = "<group>"; };
@@ -60,6 +60,7 @@
 		E288BA34238A3F0F004380E4 /* ActionKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionKit.swift; sourceTree = "<group>"; };
 		E288BA35238A3F0F004380E4 /* LiveKnob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveKnob.swift; sourceTree = "<group>"; };
 		E288BA36238A3F0F004380E4 /* Silver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Silver.swift; sourceTree = "<group>"; };
+		E2EA1B672501726800D5F4BE /* BurnsAudioCore-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BurnsAudioCore-Swift.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +85,7 @@
 		E288BA18238A3ED1004380E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E288BA17238A3ED1004380E4 /* BurnsAudio.framework */,
+				E288BA17238A3ED1004380E4 /* BurnsAudioCore.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,7 +95,8 @@
 			children = (
 				E288BA36238A3F0F004380E4 /* Silver.swift */,
 				E288BA22238A3F0F004380E4 /* UI */,
-				E288BA1A238A3ED1004380E4 /* BurnsAudio.h */,
+				E288BA1A238A3ED1004380E4 /* BurnsAudioCore.h */,
+				E2EA1B672501726800D5F4BE /* BurnsAudioCore-Swift.h */,
 				E288BA1B238A3ED1004380E4 /* Info.plist */,
 			);
 			path = BurnsAudio;
@@ -144,16 +146,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E288BA1C238A3ED1004380E4 /* BurnsAudio.h in Headers */,
+				E288BA1C238A3ED1004380E4 /* BurnsAudioCore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		E288BA16238A3ED1004380E4 /* BurnsAudio */ = {
+		E288BA16238A3ED1004380E4 /* BurnsAudioCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E288BA1F238A3ED1004380E4 /* Build configuration list for PBXNativeTarget "BurnsAudio" */;
+			buildConfigurationList = E288BA1F238A3ED1004380E4 /* Build configuration list for PBXNativeTarget "BurnsAudioCore" */;
 			buildPhases = (
 				E288BA12238A3ED1004380E4 /* Headers */,
 				E288BA13238A3ED1004380E4 /* Sources */,
@@ -164,9 +166,9 @@
 			);
 			dependencies = (
 			);
-			name = BurnsAudio;
+			name = BurnsAudioCore;
 			productName = BurnsAudio;
-			productReference = E288BA17238A3ED1004380E4 /* BurnsAudio.framework */;
+			productReference = E288BA17238A3ED1004380E4 /* BurnsAudioCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -184,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E288BA11238A3ED1004380E4 /* Build configuration list for PBXProject "BurnsAudio" */;
+			buildConfigurationList = E288BA11238A3ED1004380E4 /* Build configuration list for PBXProject "BurnsAudioCore" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -196,7 +198,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E288BA16238A3ED1004380E4 /* BurnsAudio */,
+				E288BA16238A3ED1004380E4 /* BurnsAudioCore */,
 			);
 		};
 /* End PBXProject section */
@@ -387,7 +389,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.burnsaudio.BurnsAudio;
+				PRODUCT_BUNDLE_IDENTIFIER = com.burnsaudio.BurnsAudioCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -416,7 +418,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.burnsaudio.BurnsAudio;
+				PRODUCT_BUNDLE_IDENTIFIER = com.burnsaudio.BurnsAudioCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -427,7 +429,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E288BA11238A3ED1004380E4 /* Build configuration list for PBXProject "BurnsAudio" */ = {
+		E288BA11238A3ED1004380E4 /* Build configuration list for PBXProject "BurnsAudioCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E288BA1D238A3ED1004380E4 /* Debug */,
@@ -436,7 +438,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E288BA1F238A3ED1004380E4 /* Build configuration list for PBXNativeTarget "BurnsAudio" */ = {
+		E288BA1F238A3ED1004380E4 /* Build configuration list for PBXNativeTarget "BurnsAudioCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E288BA20238A3ED1004380E4 /* Debug */,
