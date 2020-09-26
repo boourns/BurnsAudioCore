@@ -250,7 +250,7 @@ public class LiveKnobGestureRecognizer: UIPanGestureRecognizer {
     /// Horizontal and vertical slide calculation reference.
     private var lastTouchPoint: CGPoint = .zero
     /// Horizontal and vertical slide sensitivity multiplier. Defaults 0.005.
-    public var slidingSensitivity: CGFloat = 0.005
+    public var slidingSensitivity: CGFloat = 0.002
     
     // MARK: UIGestureRecognizerSubclass
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {

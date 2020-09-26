@@ -95,7 +95,8 @@ open class Knob: UIView, ParameterView {
         
         label.textColor = UILabel.appearance().tintColor
         label.text = param?.displayName ?? ""
-        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        label.font = UIFont.systemFont(ofSize: 15)
+        
         label.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer() { [weak self] in
             guard let this = self else { return }
@@ -144,6 +145,36 @@ open class Knob: UIView, ParameterView {
         knob.addControlEvent(.touchUpOutside) { [weak self] in
             self?.pressed = false
         }
+        
+        let knobTapGesture = UITapGestureRecognizer() { [weak self] in
+            guard let this = self else { return }
+            guard let param = this.param else { return }
+            
+            var inputTextField: UITextField?
+            
+            let alert = UIAlertController(title: "\(param.displayName) Value", message: "Set value between \(param.minValue) and \(param.maxValue)", preferredStyle: .alert)
+            
+            alert.addTextField() { field in
+                inputTextField = field
+                field.returnKeyType = .done
+                field.text = "\(param.value)"
+            }
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Save", comment: "Default action"), style: .default, handler: { alert in
+                guard let this = self else { return }
+                
+                this.knob.internalValue = Float(inputTextField?.text ?? "0") ?? this.knob.minimumValue
+                
+                this.knob.sendActions(for: .valueChanged)
+            }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .cancel, handler: nil))
+            
+            this.state.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+        
+        knobTapGesture.numberOfTapsRequired = 2
+        knob.addGestureRecognizer(knobTapGesture)
         
         value = param?.value ?? 0.0
     }
